@@ -176,9 +176,9 @@ export default memo(() => {
       }}
       svgClassName='classss'
       onNodeClick={(node, { type_for }: any) => {
-        console.log('value', node, type_for)
+        console.log('value', node, type_for);
 
-        window.postMessage(type_for)
+        !!(window as any).ReactNativeWebView && (window as any).ReactNativeWebView.postMessage(type_for)
       }}
     />
   </div>
