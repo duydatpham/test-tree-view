@@ -2,7 +2,8 @@
  * Created by duydatpham@gmail.com on 16/06/2022
  * Copyright (c) 2022 duydatpham@gmail.com
  */
-import React, { memo } from "react";
+import { useRouter } from "next/router";
+import React, { memo, useEffect } from "react";
 
 import Tree from 'react-d3-tree';
 
@@ -48,6 +49,11 @@ const renderRectSvgNode = ({ nodeDatum, onNodeClick }: any) => (
 );
 
 export default memo(() => {
+
+  const router = useRouter()
+  const { initWidth } = router.query as any
+
+  const [width, setWidth] = React.useState((initWidth || 0) / 2)
 
   const [orgChart] = React.useState({
     name: 'CEO ',
@@ -159,7 +165,22 @@ export default memo(() => {
     ],
   })
 
-  return <div id="treeWrapper" style={{ height: '100vh' }}>
+  useEffect(() => {
+    // setTimeout(() => {
+
+    //   // console.log()
+
+    //   // setWidth((document.getElementById('treeWrapper').offsetWidth - document.getElementsByClassName('treeWrapperclassss')[0]?.childNodes[0].getBoundingClientRect().width * 0.1) / 2)
+    // }, 1000);
+    if (!initWidth) {
+      let doc = document.getElementById('treeWrapper')
+      if (!!doc)
+        setWidth((doc.offsetWidth) / 2)
+    }
+  }, [initWidth])
+
+  return <div id="treeWrapper" style={{ height: '100vh' }}
+  >
     <Tree data={orgChart}
       orientation='vertical'
       zoomable={true}
@@ -169,12 +190,12 @@ export default memo(() => {
       nodeSize={{
         x: 300, y: 500
       }}
-      zoom={0.5}
+      zoom={0.1}
       translate={{
-        x: 100,
+        x: width,
         y: 0
       }}
-      svgClassName='classss'
+      svgClassName='treeWrapperclassss'
       onNodeClick={(node, { type_for }: any) => {
         console.log('value', node, type_for);
 
