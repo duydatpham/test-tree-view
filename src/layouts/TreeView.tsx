@@ -193,7 +193,7 @@ export default memo(() => {
       zoom={0.1}
       translate={{
         x: width,
-        y: 0
+        y: 50
       }}
       svgClassName='treeWrapperclassss'
       onNodeClick={(node, { type_for }: any) => {
